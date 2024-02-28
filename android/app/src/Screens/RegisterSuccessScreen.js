@@ -1,18 +1,17 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Header} from '../components/HomeScreen';
-import {NextStepButton} from './OTPdetails';
+import {Header} from '../Screens/HomeScreen';
 import {useNavigation} from '@react-navigation/native';
 
 export default function RegisterSuccessScreen() {
   const navigation = useNavigation();
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       <LinearGradient
         colors={['#830E76', '#371D76', '#2F2075']}
-        style={{flex: 1}}>
+        style={styles.gradientContainer}>
         <Header title="Velkommen" />
         <View style={styles.logoViewAlign}>
           <Image
@@ -22,24 +21,26 @@ export default function RegisterSuccessScreen() {
           />
         </View>
         <Text style={styles.successText}> OTP Verified Successfully </Text>
-        <View style={{marginTop: 120}}>
-          <View style={{marginTop: 80}}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('profile');
-              }}
-              style={styles.loginScreenButton}
-              underlayColor="#fff">
-              <Text style={styles.loginText}>Proceed with People</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('profile');
+            }}
+            style={styles.loginScreenButton}
+            underlayColor="#fff">
+            <Text style={styles.loginText}>Proceed with People</Text>
+          </TouchableOpacity>
         </View>
       </LinearGradient>
     </View>
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  gradientContainer: {flex: 1},
   logoViewAlign: {
     alignItems: 'center',
     marginTop: 120,
@@ -73,4 +74,7 @@ const styles = {
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
-};
+  buttonContainer: {
+    marginTop: 200,
+  },
+});

@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 // import Button from './Button';
 import LinearGradient from 'react-native-linear-gradient';
-import {Header} from '../components/HomeScreen';
+import {Header} from '../Screens/HomeScreen';
 import {NextStepButton} from './OTPdetails';
 import {useNavigation} from '@react-navigation/native';
 

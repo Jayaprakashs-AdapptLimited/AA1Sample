@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import Button from './Button';
+import Button from '../components/Button';
 import LinearGradient from 'react-native-linear-gradient';
 
 function HomeScreen() {
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.homeContainer}>
       <LinearGradient
         colors={['#830E76', '#371D76', '#2F2075']}
-        style={{flex: 1}}>
+        style={styles.gradientContainer}>
         <Header title="Velkommen" />
         <Text style={styles.subContent}>
           Spil med og vind op til 100.000 kr.
@@ -51,6 +51,12 @@ function Logo() {
 }
 
 const styles = StyleSheet.create({
+  homeContainer: {
+    flex: 1,
+  },
+  gradientContainer: {
+    flex: 1,
+  },
   navLogo: {
     width: 80,
     height: 24,
@@ -71,14 +77,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 24,
     marginTop: 60,
-    // fontFamily: 'Inter-black',
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
   },
   subContent: {
     color: 'white',
     textAlign: 'center',
     fontSize: 14,
-    // fontFamily: 'Inter-Thin',
     fontWeight: 'medium',
     marginTop: 10,
   },

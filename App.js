@@ -1,16 +1,7 @@
-// /**
-//  * Sample React Native App
-//  * https://github.com/facebook/react-native
-//  *
-//  * @format
-//  */
-
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {View} from 'react-native';
-import HomeScreen from './android/app/src/components/HomeScreen';
+import HomeScreen from './android/app/src/Screens/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-// import RegistrationScreen from './android/app/src/Screens/RegistrationScreen';
 import RegistrationScreen from './android/app/src/Screens/RegistrationScreen';
 import OTPdetails from './android/app/src/Screens/OTPdetails';
 import OTPVerificationScreen from './android/app/src/Screens/OTPVerificationScreen';
@@ -25,8 +16,6 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-          // headerTitleAlign: 'center',
           headerShown: false,
         }}>
         <Stack.Screen name="Home" component={HomeScreen} />

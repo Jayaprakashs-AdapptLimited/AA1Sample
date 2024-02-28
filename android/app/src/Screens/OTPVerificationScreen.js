@@ -1,12 +1,13 @@
-import React from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-// import Button from './Button';
+import React, {useState, useRef} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Modal} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Header} from '../components/HomeScreen';
+import {Header} from '../Screens/HomeScreen';
 import {NextStepButton} from './OTPdetails';
 import {useNavigation} from '@react-navigation/native';
+import OTPTextInput from 'react-native-otp-textinput';
 
 export default function OTPVerificationScreen() {
+  const [modalVisible, setModalVisible] = useState(true);
   const navigation = useNavigation();
 
   return (
@@ -23,26 +24,31 @@ export default function OTPVerificationScreen() {
           </Text>
           <Text style={styles.subContent}> Please enter OTP below: </Text>
         </View>
-        <View style={{marginTop: 70}}>
+        <View style={styles.otpContainer}>
+          <OTPTextInput
+            handleTextChange={text => console.log(text)}
+            inputCount={8}
+            // containerStyle={{justifyContent: 'space-evenly'}}
+            textInputStyle={styles.otpInputStyle}
+            secureTextEntry
+          />
+        </View>
+
+        <View style={styles.verifyButtonContainer}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('verifyButton');
+              navigation.navigate('registerSuccess');
             }}
             style={styles.loginScreenButton}
             underlayColor="#fff">
             <Text style={styles.loginText}>Verify My Device</Text>
           </TouchableOpacity>
         </View>
-        <Text style={{color: '#FFF', textAlign: 'center', marginTop: 20}}>
-          OR
-        </Text>
-        {/* <NextStepButton disabled={true} title="Resend" /> */}
+        <Text style={styles.orText}>OR</Text>
         <TouchableOpacity style={styles.resendButton} underlayColor="#fff">
           <Text style={styles.resendButtonText}>Resend</Text>
         </TouchableOpacity>
-        <Text style={{color: '#FFF', textAlign: 'center', marginTop: 20}}>
-          OR
-        </Text>
+        <Text style={styles.orText}>OR</Text>
         <Text style={styles.ifText}>
           If you did not receive an OTP code within 2 minutes, you can verify
           later
@@ -55,23 +61,44 @@ export default function OTPVerificationScreen() {
 
         <Text style={styles.ifText}> 02 : 00 mins</Text>
 
-        {/* <Logo /> */}
-        {/* <Button /> */}
-        {/* <Text style={styles.textStyle}>
-          Du kan registrere dig senere, hvis du ombestemmer dig
-        </Text> */}
+        <Modal animationType="fade" transparent={true} visible={modalVisible}>
+          <ModalView
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
+        </Modal>
       </LinearGradient>
     </View>
   );
 }
 
-const styles = {
+function ModalView({modalVisible, setModalVisible}) {
+  return (
+    <View style={styles.centeredView}>
+      <View style={styles.modalView}>
+        <Text style={styles.modalText}>
+          We have sent you a code via notification. Please check
+        </Text>
+        <View>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <Text style={styles.hideTextStyle}>OKAY</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
   subContent: {
     color: 'white',
     textAlign: 'center',
     fontSize: 14,
     fontWeight: 'medium',
-    // marginTop: 10,
   },
   codeStyle: {
     color: '#FFF',
@@ -151,4 +178,64 @@ const styles = {
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
-};
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    paddingTop: 40,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#FE8E2A',
+  },
+  hideTextStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  modalText: {
+    paddingBottom: 40,
+    textAlign: 'center',
+    fontSize: 16,
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  otpContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  otpInputStyle: {
+    borderColor: '#B1A9A9',
+    margin: 3,
+    borderRadius: 5,
+    borderBottomWidth: 0,
+    backgroundColor: '#FFF',
+    width: 35,
+    height: 35,
+  },
+  verifyButtonContainer: {
+    marginTop: 30,
+  },
+  orText: {color: '#FFF', textAlign: 'center', marginTop: 20},
+});
