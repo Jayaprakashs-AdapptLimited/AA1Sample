@@ -53,10 +53,24 @@ export default function OTPVerificationScreen() {
           If you did not receive an OTP code within 2 minutes, you can verify
           later
         </Text>
-        <NextStepButton title="Verify Later" />
+        <View style={styles.verifyButtonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('profile');
+            }}
+            style={styles.loginScreenButton}
+            underlayColor="#fff">
+            <Text style={styles.loginText}>Verify Later</Text>
+          </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity style={styles.skipOverButton} underlayColor="#fff">
-          <Text style={styles.skipOverText}>Edit Your Number</Text>
+        <TouchableOpacity
+          style={styles.editNumberButton}
+          underlayColor="#fff"
+          onPress={() => {
+            navigation.navigate('Register');
+          }}>
+          <Text style={styles.editNumberText}>Edit Your Number</Text>
         </TouchableOpacity>
 
         <Text style={styles.ifText}> 02 : 00 mins</Text>
@@ -219,6 +233,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 40,
     marginRight: 40,
+    color: '#000',
   },
   otpContainer: {
     justifyContent: 'center',
@@ -238,4 +253,25 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   orText: {color: '#FFF', textAlign: 'center', marginTop: 20},
+  editNumberButton: {
+    marginRight: 40,
+    marginLeft: 40,
+    marginTop: 28,
+    paddingTop: 10,
+    paddingRight: 24,
+    paddingBottom: 12,
+    paddingLeft: 24,
+    borderWidth: 1,
+    borderColor: '#FE8E2A',
+  },
+  editNumberText: {
+    color: '#FE8E2A',
+    textAlign: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 14,
+    fontFamily: 'Inter-SemiBold',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
 });
