@@ -41,7 +41,7 @@ export default function RegistrationScreen() {
             />
           </View>
         </View>
-        <Input />
+        <Input isEnabled={isEnabled} />
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
@@ -57,7 +57,7 @@ export default function RegistrationScreen() {
   );
 }
 
-function Input() {
+function Input({isEnabled}) {
   const [number, onChangeNumber] = useState();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('+91');
@@ -74,7 +74,7 @@ function Input() {
       <View style={styles.pickerInputContainer}>
         <View style={styles.codeInput}>
           <DropDownPicker
-            // disabled={true}
+            disabled={!isEnabled}
             open={open}
             value={value}
             items={items}
@@ -93,6 +93,7 @@ function Input() {
           placeholder="  XXX XXX XX"
           keyboardType="numeric"
           placeholderTextColor={'#000'}
+          editable={!!isEnabled}
         />
       </View>
     </>
