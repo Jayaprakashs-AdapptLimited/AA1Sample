@@ -1,14 +1,21 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Modal} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Header} from '../Screens/HomeScreen';
-import {NextStepButton} from './OTPdetails';
 import {useNavigation} from '@react-navigation/native';
 import OTPTextInput from 'react-native-otp-textinput';
 
 export default function OTPVerificationScreen() {
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setModalVisible(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <View style={{flex: 1}}>
