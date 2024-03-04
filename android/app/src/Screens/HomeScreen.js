@@ -33,7 +33,7 @@ export function Header({title}) {
           alt="dr Logo"
         />
       </View>
-      <Text style={styles.sectionContainer}> {title} </Text>
+      <Text style={styles.screenTitle}> {title} </Text>
     </View>
   );
 }
@@ -65,30 +65,30 @@ const styles = StyleSheet.create({
     color: '#FFF',
     textAlign: 'center',
     marginTop: 28,
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'Inter-Bold',
     fontSize: 13,
   },
   logoAlign: {
     alignItems: 'center',
     top: 40,
   },
-  sectionContainer: {
+  screenTitle: {
     textAlign: 'center',
-    color: 'white',
+    color: '#FFF',
     fontSize: 24,
     marginTop: 60,
-    fontWeight: 'bold',
+    fontFamily: 'Inter-ExtraBold',
   },
   subContent: {
-    color: 'white',
+    color: '#FFF',
     textAlign: 'center',
     fontSize: 14,
-    fontWeight: 'medium',
     marginTop: 10,
+    fontFamily: 'Inter-Bold',
   },
   logoViewAlign: {
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 30,
   },
   logo: {
     width: 499,

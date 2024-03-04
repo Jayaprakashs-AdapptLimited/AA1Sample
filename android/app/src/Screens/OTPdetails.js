@@ -23,9 +23,9 @@ export default function OTPdetails() {
           <View style={styles.listContainer}>
             <Text style={styles.pushTextAlign}>1. </Text>
             <Text style={styles.pushTextAlign}>
-              <Text style={styles.subtitle}>Push Notification: </Text> Use to
-              allow push notifications and press ok. We'll send you a code to
-              code to verify on the next step.
+              <Text style={styles.subtitle}>Push Notification: </Text> Use the
+              tab to allow push notifications and press ok. We'll send you a
+              code to code to verify on the next step.
             </Text>
           </View>
           <View style={styles.smsCodeContainer}>
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
   },
   detailsAlign: {
     marginTop: 55,
-    paddingLeft: 32,
-    paddingRight: 32,
+    paddingLeft: 40,
+    paddingRight: 40,
   },
   subtitle: {fontWeight: 'bold'},
   listContainer: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   pushTextAlign: {
     color: '#FFF',
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter-SemiBold',
     fontSize: 14,
   },
   smsCodeContainer: {marginTop: 40},

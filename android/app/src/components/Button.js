@@ -31,7 +31,7 @@ export default function Button() {
 // 10px, 24px, 12px, 24px
 const styles = StyleSheet.create({
   buttonAlign: {
-    marginTop: 40,
+    marginTop: 30,
   },
   loginScreenButton: {
     marginRight: 40,
@@ -45,10 +45,8 @@ const styles = StyleSheet.create({
   loginText: {
     color: '#FFFFFF',
     textAlign: 'center',
-    paddingLeft: 10,
-    paddingRight: 10,
     fontSize: 14,
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'Inter-Bold',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
@@ -66,8 +64,6 @@ const styles = StyleSheet.create({
   skipOverText: {
     color: '#FFFFFF',
     textAlign: 'center',
-    paddingLeft: 10,
-    paddingRight: 10,
     fontSize: 14,
     fontFamily: 'Inter-SemiBold',
     fontWeight: 'bold',
@@ -75,6 +71,7 @@ const styles = StyleSheet.create({
   },
   orText: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 78,
     marginTop: 28,

@@ -13,7 +13,6 @@ import {useNavigation} from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function RegistrationScreen() {
-  const navigation = useNavigation();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
@@ -42,22 +41,14 @@ export default function RegistrationScreen() {
           </View>
         </View>
         <Input isEnabled={isEnabled} />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('otp');
-            }}
-            style={styles.loginScreenButton}
-            underlayColor="#fff">
-            <Text style={styles.loginText}>Next Step</Text>
-          </TouchableOpacity>
-        </View>
       </LinearGradient>
     </View>
   );
 }
 
 function Input({isEnabled}) {
+  const navigation = useNavigation();
+
   const [number, onChangeNumber] = useState();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('+91');
@@ -65,12 +56,9 @@ function Input({isEnabled}) {
     {label: '+91', value: '+91'},
     {label: '+45', value: '+45'},
   ]);
-
   return (
-    <>
-      <View>
-        <Text style={styles.enterText}>Enter your mobile number</Text>
-      </View>
+    <View>
+      <Text style={styles.enterText}>Enter your mobile number</Text>
       <View style={styles.pickerInputContainer}>
         <View style={styles.codeInput}>
           <DropDownPicker
@@ -92,11 +80,21 @@ function Input({isEnabled}) {
           value={number}
           placeholder="  XXX XXX XX"
           keyboardType="numeric"
-          placeholderTextColor={'#000'}
+          placeholderTextColor={isEnabled ? '#000' : '#B1A9A9'}
           editable={!!isEnabled}
         />
       </View>
-    </>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('otp');
+          }}
+          style={styles.loginScreenButton}
+          underlayColor="#fff">
+          <Text style={styles.loginText}>Next Step</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
@@ -116,15 +114,14 @@ const styles = StyleSheet.create({
   },
   confirmTextContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginLeft: 35,
-    marginRight: 35,
+    justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: 10,
   },
   confirmTextAlign: {
     color: '#FFF',
     fontSize: 13,
+    fontFamily: 'Inter-Bold',
   },
   toggleSwitchStyle: {
     transform: [{scaleX: 1.3}, {scaleY: 1.3}],
@@ -132,21 +129,16 @@ const styles = StyleSheet.create({
   },
   pickerInputContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginLeft: 33,
-    marginRight: 33,
+    marginLeft: 25,
+    marginRight: 25,
     marginTop: 15,
   },
   codeInput: {
-    borderColor: 'white',
-    color: '#000',
     flex: 1,
-    borderRadius: 0,
   },
   input: {
     borderWidth: 1,
     marginLeft: 10,
-    color: '#000',
     width: 240,
     backgroundColor: 'white',
   },
@@ -163,20 +155,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#FE8E2A',
   },
   loginText: {
-    color: '#FFFFFF',
+    color: '#FFF',
     textAlign: 'center',
-    paddingLeft: 10,
-    paddingRight: 10,
     fontSize: 14,
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'Inter-Bold',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
   enterText: {
     marginTop: 60,
-    marginLeft: 34,
+    marginLeft: 25,
     color: '#FFF',
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Inter-Regular',
     fontSize: 14,
   },
   pickerStyle: {
