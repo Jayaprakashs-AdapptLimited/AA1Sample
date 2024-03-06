@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Header} from '../Screens/HomeScreen';
+import {useNavigation} from '@react-navigation/native';
 
 export default function ProfileScreen() {
   const [isEnabled, setIsEnabled] = useState('false');
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -54,7 +56,6 @@ export default function ProfileScreen() {
               DR's Privatlivspolitik
             </Text>
           </Text>
-
           <View style={styles.container}>
             <Switch
               trackColor={{false: '#767577', true: '#FE8E2A'}}
@@ -69,20 +70,28 @@ export default function ProfileScreen() {
         <View style={styles.buttonContainer}>
           <View style={styles.fixToText}>
             <TouchableOpacity
-              // onPress={() => {
-              //   navigation.navigate('profile');
-              // }}
+              onPress={() => {
+                navigation.navigate('reportError');
+              }}
               style={styles.loginScreenButton}>
               <Text style={styles.loginText}>spring over</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              // onPress={() => {
-              //   navigation.navigate('profile');
-              // }}
-              style={styles.submitScreenButton}>
-              <Text style={styles.submitScreenText}>indsend</Text>
-            </TouchableOpacity>
+            {isEnabled ? (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('showEnd');
+                }}
+                style={styles.submitScreenBtnActive}>
+                <Text style={styles.submitScreenTextActive}> indsend </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.submitScreenButtonInactive}
+                disabled={true}>
+                <Text style={styles.submitScreenTextInactive}> indsend </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </LinearGradient>
@@ -90,7 +99,7 @@ export default function ProfileScreen() {
   );
 }
 
-function NameInput({placeholder}) {
+export function NameInput({placeholder}) {
   const [firstName, setFirstName] = useState('');
   return (
     <View style={styles.inputContainer}>
@@ -238,15 +247,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  submitScreenButton: {
+  submitScreenButtonInactive: {
     paddingTop: 10,
     paddingRight: 24,
     paddingBottom: 12,
     paddingLeft: 24,
     backgroundColor: '#CCC',
   },
-  submitScreenText: {
+  submitScreenBtnActive: {
+    paddingTop: 10,
+    paddingRight: 24,
+    paddingBottom: 12,
+    paddingLeft: 24,
+    backgroundColor: '#FE8E2C',
+  },
+  submitScreenTextInactive: {
     color: '#676767',
+    textAlign: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 14,
+    fontFamily: 'Inter-SemiBold',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  submitScreenTextActive: {
+    color: '#FFF',
     textAlign: 'center',
     paddingLeft: 10,
     paddingRight: 10,

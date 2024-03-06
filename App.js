@@ -11,6 +11,9 @@ import OTPVerificationScreen from './android/app/src/Screens/OTPVerificationScre
 import OTPVerifyButtonScreen from './android/app/src/Screens/OTPVerifyButtonScreen';
 import RegisterSuccessScreen from './android/app/src/Screens/RegisterSuccessScreen';
 import ProfileScreen from './android/app/src/Screens/ProfileScreen';
+import ShowEnd from './android/app/src/Screens/ShowEnd';
+import ReportErrorScreen from './android/app/src/Screens/ReportErrorScreen';
+import ControlPanelScreen from './android/app/src/Screens/ControlPanelScreen';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +35,9 @@ const App = () => {
           component={RegisterSuccessScreen}
         />
         <Stack.Screen name="profile" component={ProfileScreen} />
+        <Stack.Screen name="showEnd" component={ShowEnd} />
+        <Stack.Screen name="reportError" component={ReportErrorScreen} />
+        <Stack.Screen name="controlPanel" component={ControlPanelScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
