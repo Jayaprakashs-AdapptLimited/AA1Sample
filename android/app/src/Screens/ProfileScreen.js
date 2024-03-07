@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,11 +11,52 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {Header} from '../Screens/HomeScreen';
 import {useNavigation} from '@react-navigation/native';
+import DropDownPicker from 'react-native-dropdown-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProfileScreen() {
   const [isEnabled, setIsEnabled] = useState('false');
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const navigation = useNavigation();
+  // const [number, onChangeNumber] = useState('  XXX XXX XX');
+  const [inputValue, setFirstName] = useState({
+    firstName: 'Fornavn',
+    lastName: 'Efternavn',
+    postNumber: 'Postnummer',
+    mobileNumber: '  XXX XXX XX',
+  });
+  const storeData = async () => {
+    console.log(inputValue, 'First Name');
+    console.log(JSON.stringify(inputValue), 'Stringiii');
+    try {
+      await AsyncStorage.setItem('FirstName', JSON.stringify(inputValue));
+      // await AsyncStorage.setItem('LastName', lastName);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  function inputHandle(field, text) {
+    console.log(field, 'field');
+    console.log(text, 'Text');
+    setFirstName(previous => ({...previous, [field]: text}));
+  }
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        let firstNameValue = await AsyncStorage.getItem('FirstName');
+        console.log(firstNameValue, 'Valueeee');
+        if (firstNameValue !== null) {
+          setFirstName(JSON.parse(firstNameValue));
+        }
+      } catch (e) {
+        // error reading value
+      }
+    };
+    getData();
+  }, [setFirstName]);
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -41,11 +82,31 @@ export default function ProfileScreen() {
           />
         </View>
 
-        <NameInput placeholder="Fornavn" />
-        <NameInput placeholder="Efternavn" />
-        <NameInput placeholder="Postnummer" />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.firstInputStyle}
+            onChangeText={text => inputHandle('firstName', text)}
+            value={inputValue.firstName}
+          />
+        </View>
 
-        <Input />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.firstInputStyle}
+            onChangeText={text => inputHandle('lastName', text)}
+            value={inputValue.lastName}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.firstInputStyle}
+            onChangeText={text => inputHandle('postNumber', text)}
+            value={inputValue.postNumber}
+          />
+        </View>
+
+        <Input inputHandle={inputHandle} inputValue={inputValue} />
 
         <View style={styles.toggleContainer}>
           <Text style={styles.confirmTextAlign}>
@@ -79,9 +140,9 @@ export default function ProfileScreen() {
 
             {isEnabled ? (
               <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('showEnd');
-                }}
+                onPress={storeData}
+                // navigation.navigate('showEnd');
+
                 style={styles.submitScreenBtnActive}>
                 <Text style={styles.submitScreenTextActive}> indsend </Text>
               </TouchableOpacity>
@@ -99,42 +160,40 @@ export default function ProfileScreen() {
   );
 }
 
-export function NameInput({placeholder}) {
-  const [firstName, setFirstName] = useState('');
-  return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.firstInputStyle}
-        // onChangeText={onChangeNumber}
-        value={firstName}
-        placeholder={placeholder}
-        placeholderTextColor={'#FFF'}
-        keyboardType="numeric"
-      />
-    </View>
-  );
-}
-
-function Input() {
+function Input({inputHandle, inputValue}) {
   const [text, onChangeText] = useState('');
-  const [number, onChangeNumber] = useState();
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('+91');
+  const [items, setItems] = useState([
+    {label: '+91', value: '+91'},
+    {label: '+45', value: '+45'},
+  ]);
   return (
     <View>
-      <View style={styles.innerInput}>
-        <TextInput
-          style={styles.codeInput}
-          onChangeText={onChangeText}
-          value={text}
-          placeholder="+91"
-          placeholderTextColor={'#FFF'}
-        />
+      <View style={styles.pickerInputContainer}>
+        <View style={{flex: 1}}>
+          <DropDownPicker
+            // disabled={!isEnabled}
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            disableBorderRadius={true}
+            style={styles.pickerStyle}
+          />
+        </View>
+
         <TextInput
           style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="Telefonnummer"
-          placeholderTextColor={'#FFF'}
+          onChangeText={text => inputHandle('mobileNumber', text)}
+          value={inputValue.mobileNumber}
+          // placeholder="  XXX XXX XX"
           keyboardType="numeric"
+          placeholderTextColor={'#B1A9A9'}
+          // editable={!!isEnabled}
         />
       </View>
     </View>
@@ -181,27 +240,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#301C59',
   },
   input: {
-    height: 40,
+    height: 48,
     // margin: 12,
     borderWidth: 1,
     // padding: 0,
     // paddingLeft: 140,
     marginLeft: 10,
-    color: '#000',
+    color: '#FFF',
     borderColor: '#1E0F3E',
-    width: 270,
+    width: 240,
     backgroundColor: '#301C59',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   firstInputStyle: {
-    height: 40,
+    height: 48,
     borderWidth: 1,
     // padding: 0,
     // paddingLeft: 140,
     // marginLeft: 10,
-    color: '#000',
+    color: '#FFF',
     borderColor: '#1E0F3E',
     width: 331,
     backgroundColor: '#301C59',
+    fontSize: 16,
   },
   confirmTextAlign: {
     color: '#FFF',
@@ -299,5 +361,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 15,
+  },
+  pickerInputContainer: {
+    flexDirection: 'row',
+    marginHorizontal: 30,
+    // marginLeft: 25,
+    // marginRight: 25,
+    marginTop: 15,
+  },
+  pickerStyle: {
+    borderRadius: 0,
+    backgroundColor: '#301C59',
+    borderColor: '#1E0F3E',
   },
 });
