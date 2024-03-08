@@ -18,44 +18,53 @@ export default function ProfileScreen() {
   const [isEnabled, setIsEnabled] = useState('false');
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const navigation = useNavigation();
-  // const [number, onChangeNumber] = useState('  XXX XXX XX');
-  const [inputValue, setFirstName] = useState({
-    firstName: 'Fornavn',
-    lastName: 'Efternavn',
-    postNumber: 'Postnummer',
-    mobileNumber: '  XXX XXX XX',
-  });
-  const storeData = async () => {
-    console.log(inputValue, 'First Name');
-    console.log(JSON.stringify(inputValue), 'Stringiii');
-    try {
-      await AsyncStorage.setItem('FirstName', JSON.stringify(inputValue));
-      // await AsyncStorage.setItem('LastName', lastName);
-    } catch (e) {
-      // saving error
-    }
-  };
+  const [firstName, setFirstName] = useState('Fornavn');
+  const [lastName, setLastName] = useState('Efternavn');
+  const [postNumber, setPostNumber] = useState('Postnummer');
+  const [mobileNumber, setMobileNumber] = useState('Telefonnummer');
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('+91');
+  const [items, setItems] = useState([
+    {label: '+91', value: '+91'},
+    {label: '+45', value: '+45'},
+  ]);
 
-  function inputHandle(field, text) {
-    console.log(field, 'field');
-    console.log(text, 'Text');
-    setFirstName(previous => ({...previous, [field]: text}));
-  }
+  const storeData = async () => {
+    await AsyncStorage.setItem('firstName', firstName);
+    await AsyncStorage.setItem('lastName', lastName);
+    await AsyncStorage.setItem('postNumber', postNumber);
+    await AsyncStorage.setItem('mobileNumber', mobileNumber);
+    await AsyncStorage.setItem('value', value);
+  };
 
   useEffect(() => {
     const getData = async () => {
-      try {
-        let firstNameValue = await AsyncStorage.getItem('FirstName');
-        console.log(firstNameValue, 'Valueeee');
-        if (firstNameValue !== null) {
-          setFirstName(JSON.parse(firstNameValue));
-        }
-      } catch (e) {
-        // error reading value
+      let firstNameValue = await AsyncStorage.getItem('firstName');
+      let lastNameValue = await AsyncStorage.getItem('lastName');
+      let postNumberValue = await AsyncStorage.getItem('postNumber');
+      let mobileNumberValue = await AsyncStorage.getItem('mobileNumber');
+      let mobilePinValue = await AsyncStorage.getItem('value');
+      if (firstNameValue !== null) {
+        setFirstName(firstNameValue);
+      }
+      if (lastNameValue !== null) {
+        console.log(lastNameValue);
+        setLastName(lastNameValue);
+      }
+      if (postNumberValue !== null) {
+        console.log(postNumberValue, 'Post Number value');
+        setPostNumber(postNumberValue);
+      }
+      if (mobileNumberValue !== null) {
+        console.log(mobileNumberValue, 'Mobile Number value');
+        setMobileNumber(mobileNumberValue);
+      }
+      if (mobilePinValue !== null) {
+        setValue(mobilePinValue);
       }
     };
     getData();
-  }, [setFirstName]);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -85,28 +94,55 @@ export default function ProfileScreen() {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.firstInputStyle}
-            onChangeText={text => inputHandle('firstName', text)}
-            value={inputValue.firstName}
+            onChangeText={text => setFirstName(text)}
+            value={firstName}
           />
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.firstInputStyle}
-            onChangeText={text => inputHandle('lastName', text)}
-            value={inputValue.lastName}
+            onChangeText={text => setLastName(text)}
+            value={lastName}
           />
         </View>
 
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.firstInputStyle}
-            onChangeText={text => inputHandle('postNumber', text)}
-            value={inputValue.postNumber}
+            onChangeText={text => setPostNumber(text)}
+            value={postNumber}
           />
         </View>
 
-        <Input inputHandle={inputHandle} inputValue={inputValue} />
+        <View>
+          <View style={styles.pickerInputContainer}>
+            <View style={{flex: 1}}>
+              <DropDownPicker
+                // disabled={!isEnabled}
+                open={open}
+                value={value}
+                items={items}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setItems}
+                disableBorderRadius={true}
+                style={styles.pickerStyle}
+                labelStyle={{color: '#fff'}}
+                arrowSize={30}
+                arrowIconStyle={{tintColor: '#FFF'}}
+              />
+            </View>
+
+            <TextInput
+              style={styles.input}
+              onChangeText={text => setMobileNumber(text)}
+              value={mobileNumber}
+              keyboardType="numeric"
+              placeholderTextColor={'#B1A9A9'}
+            />
+          </View>
+        </View>
 
         <View style={styles.toggleContainer}>
           <Text style={styles.confirmTextAlign}>
@@ -141,8 +177,6 @@ export default function ProfileScreen() {
             {isEnabled ? (
               <TouchableOpacity
                 onPress={storeData}
-                // navigation.navigate('showEnd');
-
                 style={styles.submitScreenBtnActive}>
                 <Text style={styles.submitScreenTextActive}> indsend </Text>
               </TouchableOpacity>
@@ -156,46 +190,6 @@ export default function ProfileScreen() {
           </View>
         </View>
       </LinearGradient>
-    </View>
-  );
-}
-
-function Input({inputHandle, inputValue}) {
-  const [text, onChangeText] = useState('');
-
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('+91');
-  const [items, setItems] = useState([
-    {label: '+91', value: '+91'},
-    {label: '+45', value: '+45'},
-  ]);
-  return (
-    <View>
-      <View style={styles.pickerInputContainer}>
-        <View style={{flex: 1}}>
-          <DropDownPicker
-            // disabled={!isEnabled}
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-            disableBorderRadius={true}
-            style={styles.pickerStyle}
-          />
-        </View>
-
-        <TextInput
-          style={styles.input}
-          onChangeText={text => inputHandle('mobileNumber', text)}
-          value={inputValue.mobileNumber}
-          // placeholder="  XXX XXX XX"
-          keyboardType="numeric"
-          placeholderTextColor={'#B1A9A9'}
-          // editable={!!isEnabled}
-        />
-      </View>
     </View>
   );
 }
@@ -229,10 +223,7 @@ const styles = StyleSheet.create({
     height: 87,
   },
   codeInput: {
-    // margin: 3,
     borderWidth: 1,
-    // padding: 5,
-    // paddingLeft: 5,
     width: 50,
     height: 40,
     borderColor: '#1E0F3E',
@@ -241,10 +232,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 48,
-    // margin: 12,
     borderWidth: 1,
-    // padding: 0,
-    // paddingLeft: 140,
     marginLeft: 10,
     color: '#FFF',
     borderColor: '#1E0F3E',
@@ -256,9 +244,6 @@ const styles = StyleSheet.create({
   firstInputStyle: {
     height: 48,
     borderWidth: 1,
-    // padding: 0,
-    // paddingLeft: 140,
-    // marginLeft: 10,
     color: '#FFF',
     borderColor: '#1E0F3E',
     width: 331,
@@ -268,9 +253,6 @@ const styles = StyleSheet.create({
   confirmTextAlign: {
     color: '#FFF',
     fontSize: 14,
-    // marginLeft: 35,
-    // paddingLeft: 20,
-    // paddingRight: 20,
   },
   underlineTextStyle: {
     color: '#FE8E2A',
@@ -281,11 +263,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 35,
     width: '100%',
-    // justifyContent: 'space-between',
   },
   loginScreenButton: {
-    // marginRight: 40,
-    // marginLeft: 40,
     paddingTop: 10,
     paddingRight: 24,
     paddingBottom: 12,
@@ -365,8 +344,6 @@ const styles = StyleSheet.create({
   pickerInputContainer: {
     flexDirection: 'row',
     marginHorizontal: 30,
-    // marginLeft: 25,
-    // marginRight: 25,
     marginTop: 15,
   },
   pickerStyle: {
