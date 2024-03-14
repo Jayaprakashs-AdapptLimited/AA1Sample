@@ -7,6 +7,9 @@ import {
   TextInput,
   Switch,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Header} from '../Screens/HomeScreen';
@@ -14,183 +17,256 @@ import {useNavigation} from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+function Input({inputHandle, inputNameError, inputValue, placeholderText}) {
+  return (
+    <>
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder={placeholderText}
+          placeholderTextColor={'#B1A9A9'}
+          style={[
+            styles.firstInputStyle,
+            {borderColor: inputNameError ? 'red' : '#1E0F3E'},
+          ]}
+          onChangeText={text => inputHandle(text)}
+          value={inputValue}
+        />
+      </View>
+      <View>
+        {inputNameError ? (
+          <Text style={styles.errorText}>{inputNameError}</Text>
+        ) : null}
+      </View>
+    </>
+  );
+}
+
 export default function ProfileScreen() {
-  const [isEnabled, setIsEnabled] = useState('false');
+  const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const navigation = useNavigation();
-  const [firstName, setFirstName] = useState('Fornavn');
-  const [lastName, setLastName] = useState('Efternavn');
-  const [postNumber, setPostNumber] = useState('Postnummer');
-  const [mobileNumber, setMobileNumber] = useState('Telefonnummer');
-  const [open, setOpen] = useState(false);
+
   const [value, setValue] = useState('+91');
+  const [open, setOpen] = useState(false);
+
   const [items, setItems] = useState([
     {label: '+91', value: '+91'},
     {label: '+45', value: '+45'},
   ]);
 
+  const [firstName, setFirstName] = useState({value: '', error: ''});
+  const [lastName, setLastName] = useState({value: '', error: ''});
+  const [postNumber, setPostNumber] = useState({value: '', error: ''});
+  const [mobileNumber, setMobileNumber] = useState({
+    value: '',
+    error: '',
+  });
+
+  function onChangeFirstName(text) {
+    console.log(text, 'Textttt');
+    setFirstName({value: text, error: ''});
+  }
+  function onChangeLastName(text) {
+    console.log(text, 'Last name Textttt');
+    setLastName({value: text, error: ''});
+  }
+
+  function onChangePostNumber(text) {
+    console.log(text, 'Post number Textttt');
+    setPostNumber({value: text, error: ''});
+  }
+
+  function onChangeMobileNumber(text) {
+    console.log(text, 'Mobile number text');
+    setMobileNumber({value: text, error: ''});
+  }
+
   const storeData = async () => {
-    await AsyncStorage.setItem('firstName', firstName);
-    await AsyncStorage.setItem('lastName', lastName);
-    await AsyncStorage.setItem('postNumber', postNumber);
-    await AsyncStorage.setItem('mobileNumber', mobileNumber);
-    await AsyncStorage.setItem('value', value);
+    const textValidation = /^[A-Za-z\s\-]+$/;
+    const numberValidation = /^[0-9]+$/;
+    if (!textValidation.test(firstName.value)) {
+      console.log('Empty');
+      setFirstName({value: firstName.value, error: 'Invalid first Name'});
+    }
+    if (!textValidation.test(lastName.value)) {
+      setLastName({value: lastName.value, error: 'Invalid Last Name'});
+    }
+
+    if (!numberValidation.test(postNumber.value)) {
+      setPostNumber({value: postNumber.value, error: 'Invalid post number'});
+    }
+
+    if (!numberValidation.test(mobileNumber.value)) {
+      setMobileNumber({
+        value: mobileNumber.value,
+        error: 'Invalid Mobile number',
+      });
+    }
+
+    const finalResult = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      postNumber: postNumber.value,
+      mobileNumber: mobileNumber.value,
+    };
+
+    await AsyncStorage.setItem('finalResult', JSON.stringify(finalResult));
   };
 
   useEffect(() => {
     const getData = async () => {
-      let firstNameValue = await AsyncStorage.getItem('firstName');
-      let lastNameValue = await AsyncStorage.getItem('lastName');
-      let postNumberValue = await AsyncStorage.getItem('postNumber');
-      let mobileNumberValue = await AsyncStorage.getItem('mobileNumber');
-      let mobilePinValue = await AsyncStorage.getItem('value');
-      if (firstNameValue !== null) {
-        setFirstName(firstNameValue);
-      }
-      if (lastNameValue !== null) {
-        console.log(lastNameValue);
-        setLastName(lastNameValue);
-      }
-      if (postNumberValue !== null) {
-        console.log(postNumberValue, 'Post Number value');
-        setPostNumber(postNumberValue);
-      }
-      if (mobileNumberValue !== null) {
-        console.log(mobileNumberValue, 'Mobile Number value');
-        setMobileNumber(mobileNumberValue);
-      }
-      if (mobilePinValue !== null) {
-        setValue(mobilePinValue);
-      }
+      let finalData = await AsyncStorage.getItem('finalResult');
+      console.log(finalData, 'First name object');
+      let storedValues = JSON.parse(finalData);
+      setFirstName({value: storedValues['firstName']});
+      setLastName({value: storedValues['lastName']});
+      setPostNumber({value: storedValues['postNumber']});
+      setMobileNumber({value: storedValues['mobileNumber']});
     };
     getData();
   }, []);
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={['#830E76', '#371D76', '#2F2075']}
-        style={styles.gradientStyle}>
-        <Header title="Dine informationer" />
-        <View style={styles.subContentContainer}>
-          <Text style={styles.subContent}>
-            Skriv dine oplysninger, så vi kan kontakte dig under udsendelsen,
-            hvis du vinder praemien.
-          </Text>
-        </View>
+    <LinearGradient
+      colors={['#830E76', '#371D76', '#2F2075']}
+      style={styles.gradientStyle}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        style={styles.container}>
+        <ScrollView>
+          <Header title="Dine informationer" />
+          <View style={styles.subContentContainer}>
+            <Text style={styles.subContent}>
+              Skriv dine oplysninger, så vi kan kontakte dig under udsendelsen,
+              hvis du vinder praemien.
+            </Text>
+          </View>
 
-        <View>
-          <Text style={styles.profileText}>1/5 PROFILER OPRETTER PA LOGIN</Text>
-        </View>
+          <View>
+            <Text style={styles.profileText}>
+              1/5 PROFILER OPRETTER PA LOGIN
+            </Text>
+          </View>
 
-        <View style={styles.logoViewAlign}>
-          <Image
-            style={styles.logo}
-            source={require('../assets/image/profileIcon.png')}
-            alt="aa1 Logo"
+          <View style={styles.logoViewAlign}>
+            <Image
+              style={styles.logo}
+              source={require('../assets/image/profileIcon.png')}
+              alt="aa1 Logo"
+            />
+          </View>
+
+          <Input
+            inputHandle={onChangeFirstName}
+            inputNameError={firstName.error}
+            inputValue={firstName.value}
+            placeholderText="Fornavn"
           />
-        </View>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.firstInputStyle}
-            onChangeText={text => setFirstName(text)}
-            value={firstName}
+          <Input
+            inputHandle={onChangeLastName}
+            inputNameError={lastName.error}
+            inputValue={lastName.value}
+            placeholderText="Efternavn"
           />
-        </View>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.firstInputStyle}
-            onChangeText={text => setLastName(text)}
-            value={lastName}
+          <Input
+            inputHandle={onChangePostNumber}
+            inputNameError={postNumber.error}
+            inputValue={postNumber.value}
+            placeholderText="Postnummer"
           />
-        </View>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.firstInputStyle}
-            onChangeText={text => setPostNumber(text)}
-            value={postNumber}
-          />
-        </View>
+          <View>
+            <View style={styles.pickerInputContainer}>
+              <View style={{flex: 1}}>
+                <DropDownPicker
+                  open={open}
+                  value={value}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setValue}
+                  setItems={setItems}
+                  disableBorderRadius={true}
+                  style={styles.pickerStyle}
+                  labelStyle={{color: '#fff'}}
+                  arrowSize={30}
+                  arrowIconStyle={{tintColor: '#FFF'}}
+                />
+              </View>
 
-        <View>
-          <View style={styles.pickerInputContainer}>
-            <View style={{flex: 1}}>
-              <DropDownPicker
-                // disabled={!isEnabled}
-                open={open}
-                value={value}
-                items={items}
-                setOpen={setOpen}
-                setValue={setValue}
-                setItems={setItems}
-                disableBorderRadius={true}
-                style={styles.pickerStyle}
-                labelStyle={{color: '#fff'}}
-                arrowSize={30}
-                arrowIconStyle={{tintColor: '#FFF'}}
+              <TextInput
+                style={[
+                  styles.input,
+                  {borderColor: mobileNumber.error ? 'red' : '#1E0F3E'},
+                ]}
+                onChangeText={text => onChangeMobileNumber(text)}
+                value={mobileNumber.value}
+                inputValue={mobileNumber.value}
+                keyboardType="numeric"
+                placeholderTextColor={'#B1A9A9'}
+                placeholder="XXX XXX XX"
               />
             </View>
-
-            <TextInput
-              style={styles.input}
-              onChangeText={text => setMobileNumber(text)}
-              value={mobileNumber}
-              keyboardType="numeric"
-              placeholderTextColor={'#B1A9A9'}
-            />
           </View>
-        </View>
+          <View>
+            {mobileNumber.error ? (
+              <Text style={{color: 'red', marginHorizontal: 30}}>
+                {mobileNumber.error}
+              </Text>
+            ) : null}
+          </View>
 
-        <View style={styles.toggleContainer}>
-          <Text style={styles.confirmTextAlign}>
-            Jeg accepterer
-            <Text style={styles.underlineTextStyle}>Vilkår og Betingelser</Text>
-            <Text> + </Text>
-            <Text style={styles.underlineTextStyle}>
-              DR's Privatlivspolitik
+          <View style={styles.toggleContainer}>
+            <Text style={styles.confirmTextAlign}>
+              Jeg accepterer
+              <Text style={styles.underlineTextStyle}>
+                Vilkår og Betingelser
+              </Text>
+              <Text> + </Text>
+              <Text style={styles.underlineTextStyle}>
+                DR's Privatlivspolitik
+              </Text>
             </Text>
-          </Text>
-          <View style={styles.container}>
-            <Switch
-              trackColor={{false: '#767577', true: '#FE8E2A'}}
-              thumbColor={isEnabled ? '#FFF' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
-              style={styles.toggleStyle}
-            />
+            <View style={styles.container}>
+              <Switch
+                trackColor={{false: '#767577', true: '#FE8E2A'}}
+                thumbColor={isEnabled ? '#FFF' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+                style={styles.toggleStyle}
+              />
+            </View>
           </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          <View style={styles.fixToText}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('reportError');
-              }}
-              style={styles.loginScreenButton}>
-              <Text style={styles.loginText}>spring over</Text>
-            </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <View style={styles.fixToText}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('reportError');
+                }}
+                style={styles.loginScreenButton}>
+                <Text style={styles.loginText}>spring over</Text>
+              </TouchableOpacity>
 
-            {isEnabled ? (
-              <TouchableOpacity
-                onPress={storeData}
-                style={styles.submitScreenBtnActive}>
-                <Text style={styles.submitScreenTextActive}> indsend </Text>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.submitScreenButtonInactive}
-                disabled={true}>
-                <Text style={styles.submitScreenTextInactive}> indsend </Text>
-              </TouchableOpacity>
-            )}
+              {isEnabled ? (
+                <TouchableOpacity
+                  onPress={storeData}
+                  style={styles.submitScreenBtnActive}>
+                  <Text style={styles.submitScreenTextActive}> indsend </Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.submitScreenButtonInactive}
+                  disabled={true}>
+                  <Text style={styles.submitScreenTextInactive}> indsend </Text>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
-        </View>
-      </LinearGradient>
-    </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }
 
@@ -245,7 +321,6 @@ const styles = StyleSheet.create({
     height: 48,
     borderWidth: 1,
     color: '#FFF',
-    borderColor: '#1E0F3E',
     width: 331,
     backgroundColor: '#301C59',
     fontSize: 16,
@@ -287,6 +362,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 20,
   },
   submitScreenButtonInactive: {
     paddingTop: 10,
@@ -351,4 +427,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#301C59',
     borderColor: '#1E0F3E',
   },
+  errorText: {color: 'red', marginHorizontal: 30},
 });
