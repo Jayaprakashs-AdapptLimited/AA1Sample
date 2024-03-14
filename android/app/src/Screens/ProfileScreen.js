@@ -63,21 +63,17 @@ export default function ProfileScreen() {
   });
 
   function onChangeFirstName(text) {
-    console.log(text, 'Textttt');
     setFirstName({value: text, error: ''});
   }
   function onChangeLastName(text) {
-    console.log(text, 'Last name Textttt');
     setLastName({value: text, error: ''});
   }
 
   function onChangePostNumber(text) {
-    console.log(text, 'Post number Textttt');
     setPostNumber({value: text, error: ''});
   }
 
   function onChangeMobileNumber(text) {
-    console.log(text, 'Mobile number text');
     setMobileNumber({value: text, error: ''});
   }
 
@@ -85,7 +81,6 @@ export default function ProfileScreen() {
     const textValidation = /^[A-Za-z\s\-]+$/;
     const numberValidation = /^[0-9]+$/;
     if (!textValidation.test(firstName.value)) {
-      console.log('Empty');
       setFirstName({value: firstName.value, error: 'Invalid first Name'});
     }
     if (!textValidation.test(lastName.value)) {
@@ -116,7 +111,6 @@ export default function ProfileScreen() {
   useEffect(() => {
     const getData = async () => {
       let finalData = await AsyncStorage.getItem('finalResult');
-      console.log(finalData, 'First name object');
       let storedValues = JSON.parse(finalData);
       setFirstName({value: storedValues['firstName']});
       setLastName({value: storedValues['lastName']});
