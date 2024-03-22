@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from './android/app/src/Screens/HomeScreen';
@@ -14,8 +15,25 @@ import ProfileScreen from './android/app/src/Screens/ProfileScreen';
 import ShowEnd from './android/app/src/Screens/ShowEnd';
 import ReportErrorScreen from './android/app/src/Screens/ReportErrorScreen';
 import ControlPanelScreen from './android/app/src/Screens/ControlPanelScreen';
+import QuestionScreen from './android/app/src/Screens/QuestionScreen';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function Root() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}>
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="reportError" component={ReportErrorScreen} />
+      <Stack.Screen name="controlPanel" component={ControlPanelScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 const App = () => {
   return (
@@ -25,7 +43,8 @@ const App = () => {
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        <Stack.Screen name="Root" component={Root} />
         <Stack.Screen name="Register" component={RegistrationScreen} />
         <Stack.Screen name="otp" component={OTPdetails} />
         <Stack.Screen name="otpVerify" component={OTPVerificationScreen} />
@@ -35,9 +54,10 @@ const App = () => {
           component={RegisterSuccessScreen}
         />
         <Stack.Screen name="profile" component={ProfileScreen} />
+        <Stack.Screen name="question" component={QuestionScreen} />
         <Stack.Screen name="showEnd" component={ShowEnd} />
-        <Stack.Screen name="reportError" component={ReportErrorScreen} />
-        <Stack.Screen name="controlPanel" component={ControlPanelScreen} />
+        {/* <Stack.Screen name="reportError" component={ReportErrorScreen} />
+        <Stack.Screen name="controlPanel" component={ControlPanelScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
