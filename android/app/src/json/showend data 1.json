@@ -1,0 +1,497 @@
+{
+    "friends": [
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/hOiFb5PEbA.png?time=661146197",
+            "name": "Jayaprakash S",
+            "first_name": "Jayaprakash",
+            "last_name": "S",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 15
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 207
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 599
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 184
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 126
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 466
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 90
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 714
+                }
+            ],
+            "username": "Jayaprakash",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/g4bgE6K3.png?time=660735560",
+            "name": "Arun Ravi",
+            "first_name": "Arun",
+            "last_name": "Ravi",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 60
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 260
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 510
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 512
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 186
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 263
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 71
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 515
+                }
+            ],
+            "username": "iamarunravi",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/9I5tWmg1K.png?time=661079511",
+            "name": "Mathan Kumar",
+            "first_name": "Mathan",
+            "last_name": "Kumar",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 77
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 240
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 363
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 291
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 152
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 148
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 56
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 510
+                }
+            ],
+            "username": "Pondybeach",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/ISQYiJme8O.png?time=661148469",
+            "name": "Latha Kaliappan",
+            "first_name": "Latha",
+            "last_name": "Kaliappan",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 20
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 337
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 559
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 339
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 161
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 241
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 44
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 243
+                }
+            ],
+            "username": "Latha",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/7ApmZmxJEz.png?time=661148661",
+            "name": "santhosh Kumar",
+            "first_name": "santhosh",
+            "last_name": "Kumar",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 85
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 251
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 496
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 703
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 284
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 307
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 10
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 827
+                }
+            ],
+            "username": "santhosh128",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/AaJh2jjxg6.png?time=661146473",
+            "name": "Balaji S",
+            "first_name": "Balaji",
+            "last_name": "S",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 57
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 291
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 500
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 611
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 179
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 218
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 16
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 500
+                }
+            ],
+            "username": "Balaji",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/otCGlf1iuN.png?time=661148745",
+            "name": "Ram Pragesh",
+            "first_name": "Ram",
+            "last_name": "Pragesh",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 100
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 187
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 477
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 459
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 170
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 231
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 24
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 444
+                }
+            ],
+            "username": "Ram",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/5CvqZhhC1D.png?time=661148502",
+            "name": "Surendiran I",
+            "first_name": "Surendiran",
+            "last_name": "I",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 90
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 240
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 550
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 530
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 137
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 81
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 367
+                }
+            ],
+            "username": "Surendiran",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/8kcp84mcKp.png?time=661148111",
+            "name": "Kotheeswari I",
+            "first_name": "Kotheeswari",
+            "last_name": "I",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 20
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 175
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 718
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 256
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 151
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 323
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 64
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 582
+                }
+            ],
+            "username": "Mohi",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/mkXD7DuLDy.png?time=661148564",
+            "name": "Mohamed Jaffar",
+            "first_name": "Mohamed",
+            "last_name": "Jaffar",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 63
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 243
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 979
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 127
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 83
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 500
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 91
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 720
+                }
+            ],
+            "username": "Jr",
+            "me": false
+        },
+        {
+            "avatar_url": "https://avatar-static.stage.uno.svt.se/avatars/MJV9LDIhHI.png?time=660981702",
+            "name": "Afshaan Pasha",
+            "first_name": "Afshaan",
+            "last_name": "Pasha",
+            "choice_set": [
+                {
+                    "poll_id": 1482935882,
+                    "value": 42
+                },
+                {
+                    "poll_id": 1078156112,
+                    "value": 256
+                },
+                {
+                    "poll_id": 472923150,
+                    "value": 347
+                },
+                {
+                    "poll_id": 1972273583,
+                    "value": 336
+                },
+                {
+                    "poll_id": 917356757,
+                    "value": 147
+                },
+                {
+                    "poll_id": 650043592,
+                    "value": 95
+                },
+                {
+                    "poll_id": 405567544,
+                    "value": 48
+                },
+                {
+                    "poll_id": 1357046226,
+                    "value": 468
+                }
+            ],
+            "username": "iamafshaan",
+            "me": true
+        }
+    ],
+    "everyone": [],
+    "correct": [
+        {
+            "poll_id": 1482935882,
+            "value": 45
+        },
+        {
+            "poll_id": 1078156112,
+            "value": 240
+        },
+        {
+            "poll_id": 472923150,
+            "value": 53
+        },
+        {
+            "poll_id": 1972273583,
+            "value": 315
+        },
+        {
+            "poll_id": 917356757,
+            "value": 155
+        },
+        {
+            "poll_id": 650043592,
+            "value": 60
+        },
+        {
+            "poll_id": 405567544,
+            "value": 37
+        },
+        {
+            "poll_id": 1357046226,
+            "value": 565
+        }
+    ]
+}

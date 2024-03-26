@@ -1,8 +1,34 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  SafeAreaView,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import data from '../json/showend data 1.json';
 
 export default function ShowEnd() {
+  const correctValue = data.correct[0].value;
+
+  const sortedFriends = data.friends.sort((a, b) => {
+    const differenceA = Math.abs(a.choice_set[0].value - correctValue);
+    const differenceB = Math.abs(b.choice_set[0].value - correctValue);
+    return differenceA - differenceB;
+  });
+
+  const renderItem = ({item, index: number}) => (
+    <View style={styles.othersLeaderboardContainer}>
+      <OthersLeaderBoard
+        positionNumber={number + 4}
+        value={item.choice_set[0].value}
+        name={item.name}
+        url={item.avatar_url}
+      />
+    </View>
+  );
   return (
     <View style={styles.showEndContainer}>
       <LinearGradient
@@ -16,7 +42,9 @@ export default function ShowEnd() {
             <View>
               <Image
                 style={styles.topThreeProfile}
-                source={require('../assets/image/round_profile.png')}
+                source={{
+                  uri: 'https://avatar-static.stage.uno.svt.se/avatars/5CvqZhhC1D.png?time=661148502',
+                }}
                 alt="aa1 Logo"
               />
             </View>
@@ -38,7 +66,9 @@ export default function ShowEnd() {
               />
               <Image
                 style={styles.topThreeProfile}
-                source={require('../assets/image/round_profile.png')}
+                source={{
+                  uri: 'https://avatar-static.stage.uno.svt.se/avatars/MJV9LDIhHI.png?time=660981702',
+                }}
                 alt="aa1 Logo"
               />
             </View>
@@ -56,7 +86,9 @@ export default function ShowEnd() {
             <View style={styles.winnerProfile}>
               <Image
                 style={styles.topThreeProfile}
-                source={require('../assets/image/round_profile.png')}
+                source={{
+                  uri: 'https://avatar-static.stage.uno.svt.se/avatars/8kcp84mcKp.png?time=661148111',
+                }}
                 alt="aa1 Logo"
               />
             </View>
@@ -71,37 +103,41 @@ export default function ShowEnd() {
           </View>
         </View>
 
-        <View style={{marginTop: 60}}>
-          <OthersLeaderBoard postitionNumber="4" />
-        </View>
-        <View style={{marginTop: 20}}>
-          <OthersLeaderBoard postitionNumber="5" />
-        </View>
-        <View style={{marginTop: 20}}>
-          <OthersLeaderBoard postitionNumber="6" />
-        </View>
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={sortedFriends}
+            renderItem={renderItem}
+            style={{marginTop: 50}}
+          />
+        </SafeAreaView>
       </LinearGradient>
     </View>
   );
 }
 
-function OthersLeaderBoard({postitionNumber}) {
+function OthersLeaderBoard({positionNumber, name, value, url}) {
   return (
     <View style={styles.othersLeaderboard}>
-      <Text style={styles.positionNumber}> {postitionNumber} </Text>
-      <Image
-        style={styles.othersProfileIcon}
-        source={require('../assets/image/round_profile.png')}
-        alt="aa1 Logo"
-      />
-      <View style={{marginLeft: 5}}>
-        <Text style={styles.othersLeaderboardName}> Name </Text>
-        <Text style={styles.othersLeaderboardReply}>
-          Svar <Text style={styles.replyNumberStyle}> 7</Text>
-        </Text>
+      <View style={styles.positionImage}>
+        <Text style={styles.positionNumber}> {positionNumber} </Text>
+        <Image
+          style={styles.othersProfileIcon}
+          source={{
+            uri: url,
+          }}
+          alt="aa1 Logo"
+        />
       </View>
-      <View style={{marginLeft: 130}}>
-        <Text style={styles.othersLeaderboardPercentage}>82%</Text>
+      <View style={styles.nameScore}>
+        <View style={{width: '50%'}}>
+          <Text style={styles.othersLeaderboardName}> {name} </Text>
+          <Text style={styles.othersLeaderboardReply}>
+            Svar <Text style={styles.replyNumberStyle}> 7</Text>
+          </Text>
+        </View>
+        <View style={{width: '30%'}}>
+          <Text style={styles.othersLeaderboardPercentage}>{value}</Text>
+        </View>
       </View>
     </View>
   );
@@ -238,11 +274,12 @@ const styles = StyleSheet.create({
     color: '#FEA501',
     fontWeight: 'bold',
     fontSize: 18,
+    textAlign: 'right',
   },
   othersProfileIcon: {
     width: 50,
     height: 50,
-    marginLeft: 5,
+    marginLeft: 10,
     borderWidth: 2,
     borderColor: '#cabed6',
     borderRadius: 50,
@@ -262,5 +299,23 @@ const styles = StyleSheet.create({
     top: -20,
     width: 30,
     height: 30,
+  },
+  container: {
+    flex: 1,
+    marginTop: 10,
+  },
+  positionImage: {
+    width: '20%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  nameScore: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  othersLeaderboardContainer: {
+    marginTop: 15,
   },
 });
