@@ -96,9 +96,8 @@ export default function ProfileScreen() {
         value: mobileNumber.value,
         error: 'Invalid Mobile number',
       });
-
-      navigation.navigate('showEnd');
     }
+    navigation.navigate('showEnd');
 
     const finalResult = {
       firstName: firstName.value,

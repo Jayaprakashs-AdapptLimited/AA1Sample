@@ -10,25 +10,37 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import data from '../json/showend data 1.json';
 
+const renderItem = ({item, index}) =>
+  index > 2 ? (
+    <View style={styles.othersLeaderboardContainer}>
+      <OtherPlayersScoreCard
+        positionNumber={index + 1}
+        value={item.choice_set[0].value}
+        name={item.name}
+        url={item.avatar_url}
+      />
+    </View>
+  ) : (
+    ''
+  );
+
 export default function ShowEnd() {
   const correctValue = data.correct[0].value;
-
+  let indexNumber = [];
   const sortedFriends = data.friends.sort((a, b) => {
     const differenceA = Math.abs(a.choice_set[0].value - correctValue);
     const differenceB = Math.abs(b.choice_set[0].value - correctValue);
     return differenceA - differenceB;
   });
 
-  const renderItem = ({item, index: number}) => (
-    <View style={styles.othersLeaderboardContainer}>
-      <OthersLeaderBoard
-        positionNumber={number + 4}
-        value={item.choice_set[0].value}
-        name={item.name}
-        url={item.avatar_url}
-      />
-    </View>
-  );
+  const myValue = sortedFriends.filter((each, index) => {
+    if (index < 3) {
+      indexNumber.push(index + 1);
+      return each;
+    }
+  });
+  console.log(myValue, 'myValueeee');
+
   return (
     <View style={styles.showEndContainer}>
       <LinearGradient
@@ -37,77 +49,14 @@ export default function ShowEnd() {
         <View style={styles.titleAlign}>
           <Header title="Din gruppes samlede resultat i aften" />
         </View>
-        <View style={styles.topThreeContainer}>
-          <View style={styles.topSecondThirdContainer}>
-            <View>
-              <Image
-                style={styles.topThreeProfile}
-                source={{
-                  uri: 'https://avatar-static.stage.uno.svt.se/avatars/5CvqZhhC1D.png?time=661148502',
-                }}
-                alt="aa1 Logo"
-              />
-            </View>
-            <View style={styles.rankingNumberContainer}>
-              <Text style={styles.rankingNumber}> 2 </Text>
-            </View>
-            <Text style={styles.topThreeName}> Name2 </Text>
-            <Text style={styles.percentage}> 82%</Text>
-            <Text style={styles.replyTextAlign}>
-              Svar <Text style={styles.replyNumberStyle}> 7</Text>
-            </Text>
-          </View>
-          <View style={styles.topFirstContainer}>
-            <View>
-              <Image
-                style={styles.crownImage}
-                source={require('../assets/image/crown.png')}
-                alt="aa1 Logo"
-              />
-              <Image
-                style={styles.topThreeProfile}
-                source={{
-                  uri: 'https://avatar-static.stage.uno.svt.se/avatars/MJV9LDIhHI.png?time=660981702',
-                }}
-                alt="aa1 Logo"
-              />
-            </View>
-            <View style={styles.rankingNumberContainer}>
-              <Text style={styles.rankingNumber}> 1 </Text>
-            </View>
-            <Text style={styles.topThreeName}> Name </Text>
-            <Text style={styles.percentage}> 82%</Text>
-            <Text style={styles.replyTextAlign}>
-              Svar <Text style={styles.replyNumberStyle}> 7</Text>
-            </Text>
-          </View>
-
-          <View style={styles.topSecondThirdContainer}>
-            <View style={styles.winnerProfile}>
-              <Image
-                style={styles.topThreeProfile}
-                source={{
-                  uri: 'https://avatar-static.stage.uno.svt.se/avatars/8kcp84mcKp.png?time=661148111',
-                }}
-                alt="aa1 Logo"
-              />
-            </View>
-            <View style={styles.rankingNumberContainer}>
-              <Text style={styles.rankingNumber}> 3 </Text>
-            </View>
-            <Text style={styles.topThreeName}> Name3 </Text>
-            <Text style={styles.percentage}> 82%</Text>
-            <Text style={styles.replyTextAlign}>
-              Svar <Text style={styles.replyNumberStyle}>7</Text>
-            </Text>
-          </View>
-        </View>
 
         <SafeAreaView style={styles.container}>
+          <TopThreePlayers item={myValue} index={indexNumber} />
+
           <FlatList
             data={sortedFriends}
             renderItem={renderItem}
-            style={{marginTop: 50}}
+            style={{marginTop: 60}}
           />
         </SafeAreaView>
       </LinearGradient>
@@ -115,7 +64,7 @@ export default function ShowEnd() {
   );
 }
 
-function OthersLeaderBoard({positionNumber, name, value, url}) {
+function OtherPlayersScoreCard({positionNumber, name, value, url}) {
   return (
     <View style={styles.othersLeaderboard}>
       <View style={styles.positionImage}>
@@ -138,6 +87,80 @@ function OthersLeaderBoard({positionNumber, name, value, url}) {
         <View style={{width: '30%'}}>
           <Text style={styles.othersLeaderboardPercentage}>{value}</Text>
         </View>
+      </View>
+    </View>
+  );
+}
+
+function TopThreePlayers({item, index}) {
+  return (
+    <View style={styles.topThreeContainer}>
+      <View style={styles.topSecondThirdContainer}>
+        <View>
+          <Image
+            style={styles.topThreeProfile}
+            source={{
+              uri: item[1].avatar_url,
+            }}
+            alt="aa1 Logo"
+          />
+        </View>
+        <View style={styles.rankingNumberContainer}>
+          <Text style={styles.rankingNumber}> {index[1]} </Text>
+        </View>
+        <Text style={styles.topThreeName}> {item[1].name} </Text>
+        <Text style={styles.percentage}>{item[1].choice_set[0].value}</Text>
+        <Text style={styles.replyTextAlign}>
+          Svar <Text style={styles.replyNumberStyle}> 7</Text>
+        </Text>
+      </View>
+
+      <View style={styles.topFirstContainer}>
+        <View>
+          {index[0] === 1 ? (
+            <Image
+              style={styles.crownImage}
+              source={require('../assets/image/crown.png')}
+              alt="aa1 Logo"
+            />
+          ) : (
+            ''
+          )}
+          <Image
+            style={styles.topThreeProfile}
+            source={{
+              uri: item[0].avatar_url,
+            }}
+            alt="aa1 Logo"
+          />
+        </View>
+        <View style={styles.rankingNumberContainer}>
+          <Text style={styles.rankingNumber}> {index[0]} </Text>
+        </View>
+        <Text style={styles.topThreeName}> {item[0].name} </Text>
+        <Text style={styles.percentage}>{item[0].choice_set[0].value}</Text>
+        <Text style={styles.replyTextAlign}>
+          Svar <Text style={styles.replyNumberStyle}> 7</Text>
+        </Text>
+      </View>
+      <View style={styles.topSecondThirdContainer}>
+        <View style={styles.winnerProfile}>
+          <Image
+            style={styles.topThreeProfile}
+            source={{
+              uri: item[2].avatar_url,
+            }}
+            alt="aa1 Logo"
+          />
+        </View>
+        <View style={styles.rankingNumberContainer}>
+          <Text style={styles.rankingNumber}> {index[2]} </Text>
+        </View>
+        <Text style={styles.topThreeName}> {item[2].name} </Text>
+        <Text style={styles.percentage}> {item[2].choice_set[0].value} </Text>
+        <Text style={styles.replyTextAlign}>
+          Svar <Text style={styles.replyNumberStyle}>7</Text>
+        </Text>
       </View>
     </View>
   );
@@ -302,7 +325,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: 10,
   },
   positionImage: {
     width: '20%',
