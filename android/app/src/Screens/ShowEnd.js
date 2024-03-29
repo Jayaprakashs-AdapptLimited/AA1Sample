@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import data from '../json/showend data 1.json';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const renderItem = ({item, index}) =>
   index > 2 ? (
@@ -49,8 +50,7 @@ export default function ShowEnd() {
         <View style={styles.titleAlign}>
           <Header title="Din gruppes samlede resultat i aften" />
         </View>
-
-        <SafeAreaView style={styles.container}>
+        <ScrollView>
           <TopThreePlayers item={myValue} index={indexNumber} />
 
           <FlatList
@@ -58,7 +58,7 @@ export default function ShowEnd() {
             renderItem={renderItem}
             style={{marginTop: 60}}
           />
-        </SafeAreaView>
+        </ScrollView>
       </LinearGradient>
     </View>
   );
