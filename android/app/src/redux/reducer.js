@@ -2,12 +2,12 @@ const initialState = {version: '', questionData: []};
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'postSave':
+    case 'SAVE_VERSION_SUCCESS':
       return {
         ...state,
         version: action.payload,
       };
-    case 'questionData':
+    case 'FETCH_QUESTION_DATA_SUCCESS':
       return {
         ...state,
         questionData: action.payload,

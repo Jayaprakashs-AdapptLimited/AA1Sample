@@ -21,7 +21,12 @@ export default function Button() {
         <View style={styles.lineAlign} />
       </View>
 
-      <TouchableOpacity style={styles.skipOverButton} underlayColor="#fff">
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('question');
+        }}
+        style={styles.skipOverButton}
+        underlayColor="#fff">
         <Text style={styles.skipOverText}>spring over</Text>
       </TouchableOpacity>
     </View>
